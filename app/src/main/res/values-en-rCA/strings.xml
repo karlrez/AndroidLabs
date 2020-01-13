@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">AndroidLabs</string>
     <string name="hello_message">Hello Again!</string>
+    <string name="ButtonText">I’m a canadian button</string>
 </resources>
