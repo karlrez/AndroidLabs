@@ -2,5 +2,9 @@
 <resources>
     <string name="app_name">AndroidLabs</string>
     <string name="hello_message">Hola!</string>
-    <string name="ButtonText">Soy botón!</string>
+    <string name="Header_Text">Mira mi GUI</string>
+    <string name="Button_Text">Soy boton</string>
+    <string name="Checkbox_Text">Mira esto!</string>
+    <string name="Switch_Text">encendido / apagado</string>
+    <string name="Input_Box">Escriba aquí</string>
 </resources>
