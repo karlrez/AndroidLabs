@@ -7,4 +7,11 @@
     <string name="Checkbox_Text">Mira esto!</string>
     <string name="Switch_Text">encendido / apagado</string>
     <string name="Input_Box">Escriba aquí</string>
+
+    <string name="Toast_Message">aquí hay más información</string>
+    <string name="snackbar_msg">el cambio es ahora" "</string>
+    <string name="on_msg">encendido</string>
+    <string name="off_msg">apagado</string>
+    <string name="snackbar_message_undo">deshacer</string>
+    <string name="checkboxValue">la casilla de verificación es ahora" "</string>
 </resources>

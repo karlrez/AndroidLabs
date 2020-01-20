@@ -7,4 +7,11 @@
     <string name="Switch_Text">Switch on / off</string>
     <string name="Input_Box">Type here</string>
 
+    <string name="Toast_Message">Here is more information</string>
+    <string name="snackbar_msg">The switch is now" "</string>
+    <string name="on_msg">on</string>
+    <string name="off_msg">off</string>
+    <string name="snackbar_message_undo">undo</string>
+    <string name="checkboxValue">The checkbox is now" "</string>
+
 </resources>
