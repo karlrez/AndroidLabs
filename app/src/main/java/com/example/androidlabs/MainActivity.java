@@ -2,58 +2,60 @@ package com.example.androidlabs;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.Switch;
-import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+    SharedPreferences prefs = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_relative);
-
-        //bunch of variables
-        final CheckBox checkbox = (CheckBox) findViewById(R.id.checkbox); //variable for widget
-        String onMessage = getResources().getString(R.string.on_msg);
-        String offMessage = getResources().getString(R.string.off_msg);
-        String undoMessage = getResources().getString(R.string.snackbar_message_undo);
-        String toast_msg = getResources().getString(R.string.Toast_Message);
-        String checkboxValue = getResources().getString(R.string.checkboxValue);
-
-        // toast message when checkbox is clicked
-        checkbox.setOnClickListener( v -> Toast.makeText(this, toast_msg , Toast.LENGTH_LONG).show());
-
-        // Snackbar message when checkbox is clicked
-        // Creating variable for snackbar but changing it based on boolean value given
-        checkbox.setOnCheckedChangeListener((CompoundButton cb, boolean b) -> {
-            Snackbar checkboxSnackbar = Snackbar.make(checkbox, checkboxValue + onMessage, Snackbar.LENGTH_LONG); // had to initialize it to make error go away
-            if(b)
-                checkboxSnackbar = Snackbar.make(checkbox, checkboxValue + onMessage, Snackbar.LENGTH_LONG);
-            else
-                checkboxSnackbar = Snackbar.make(checkbox, checkboxValue + offMessage, Snackbar.LENGTH_LONG);
-            checkboxSnackbar.setAction(undoMessage, click -> cb.setChecked(!b)).show();
-        });
+        setContentView(R.layout.activity_main_lab3);
 
 
-        // variables needed for Switch Snackbar
-        final Switch onOffSwitch = findViewById(R.id.switch1); //variable for switch widget
-        String snackbar_msg = getResources().getString(R.string.snackbar_msg);
+        prefs = getSharedPreferences("FileName", Context.MODE_PRIVATE);
+        String savedString = prefs.getString("ReserveName", "");
+        EditText typeField = findViewById(R.id.emailInput);
+        typeField.setText(savedString);
 
-        // creating listener for Switch
-        onOffSwitch.setOnCheckedChangeListener((CompoundButton cb, boolean b) -> {
-            Snackbar mySnackbar = Snackbar.make(onOffSwitch, snackbar_msg + onMessage, Snackbar.LENGTH_LONG);
-            if(b)
-                mySnackbar = Snackbar.make(onOffSwitch, snackbar_msg + onMessage, Snackbar.LENGTH_LONG);
-            else
-                mySnackbar = Snackbar.make(onOffSwitch, snackbar_msg + offMessage, Snackbar.LENGTH_LONG);
-            mySnackbar.setAction(undoMessage, click -> cb.setChecked(!b)).show();
-        });
+        Button loginButton = findViewById(R.id.loginButton);
+
+        loginButton.setOnClickListener( click -> {
+            saveSharedPrefs( typeField.getText().toString());
+
+            Intent goToProfile = new Intent(MainActivity.this, ProfileActivity.class);
+            goToProfile.putExtra("EMAIL", typeField.getText().toString());
+            startActivity(goToProfile);
+        } );
+
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void saveSharedPrefs(String stringToSave) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("ReserveName", stringToSave);
+        editor.commit();
+    }
+
 }
-
-

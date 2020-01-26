@@ -14,4 +14,19 @@
     <string name="snackbar_message_undo">undo</string>
     <string name="checkboxValue">The checkbox is now" "</string>
 
+    <!-- lab3 -->
+    <string name="line1">Enter your email address:</string>
+    <string name="line2">Type email here</string>
+    <string name="line3">Type your password:</string>
+    <string name="login">Login</string>
+
+    <!-- profileActivity -->
+    <string name="your_profile">Your profile</string>
+    <string name="your_name">Your name:</string>
+    <string name="enter_name">Enter your name</string>
+    <string name="your_email">Your email:</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="your_picture">Your picture:</string>
+    <string name="click_button">Click the button above to take a picture</string>
+
 </resources>
