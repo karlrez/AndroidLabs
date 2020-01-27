@@ -16,19 +16,20 @@ import java.text.CollationElementIterator;
 public class ProfileActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     public static final String ACTIVITY_NAME = "PROFILE_ACTIVITY";
-    ImageButton mImageButton;
+    ImageButton mImageButton = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        //click listener for ImageButton
         mImageButton = findViewById(R.id.picButton);
         mImageButton.setOnClickListener( bt -> dispatchTakePictureIntent());
 
+        //to auto-fill the email field
         Intent fromMain = getIntent();
-
-
         EditText emailEditText = (EditText) findViewById(R.id.emailEditText);
         emailEditText.setText(fromMain.getStringExtra("EMAIL"));
     }
@@ -50,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             mImageButton.setImageBitmap(imageBitmap);
         }
+        Log.e(ACTIVITY_NAME, "In function:" + "onActivityResult()");
     }
 
     @Override
@@ -81,10 +83,5 @@ public class ProfileActivity extends AppCompatActivity {
         super.onDestroy();
         Log.e(ACTIVITY_NAME, "In function:" + "onDestroy()");
     }
-
-    //@Override
-    //protected void onActivityResult() {
-    //    super.onActivityResult();
-    //}
 
 }

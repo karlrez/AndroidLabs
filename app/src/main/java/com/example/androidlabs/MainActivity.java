@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
             Intent goToProfile = new Intent(MainActivity.this, ProfileActivity.class);
             goToProfile.putExtra("EMAIL", typeField.getText().toString());
+            // requestCode 1 is just random
             startActivity(goToProfile);
         } );
 

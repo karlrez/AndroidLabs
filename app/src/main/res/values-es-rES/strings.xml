@@ -14,4 +14,19 @@
     <string name="off_msg">apagado</string>
     <string name="snackbar_message_undo">deshacer</string>
     <string name="checkboxValue">la casilla de verificación es ahora" "</string>
+
+    <!-- lab3 -->
+    <string name="line1">Ingrese su dirección de correo electrónico:</string>
+    <string name="line2">Escriba correo electrónico aquí</string>
+    <string name="line3">Escribe tu contraseña:</string>
+    <string name="login">Iniciar sesión</string>
+
+    <!-- profileActivity -->
+    <string name="your_profile">Tu perfil</string>
+    <string name="your_name">Tu nombre:</string>
+    <string name="enter_name">Introduzca su nombre</string>
+    <string name="your_email">Tu correo electrónico:</string>
+    <string name="enter_email">Introduce tu correo electrónico</string>
+    <string name="your_picture">Su imagen:</string>
+    <string name="click_button">Haz clic en el botón de arriba para tomar una foto</string>
 </resources>
