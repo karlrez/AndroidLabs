@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -26,7 +25,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         //click listener for ImageButton
         mImageButton = findViewById(R.id.picButton);
-        mImageButton.setOnClickListener( bt -> dispatchTakePictureIntent());
+        mImageButton.setOnClickListener( click -> dispatchTakePictureIntent());
 
         //to auto-fill the email field
         Intent fromMain = getIntent();
