@@ -28,5 +28,10 @@
     <string name="enter_email">Enter your email</string>
     <string name="your_picture">Your picture:</string>
     <string name="click_button">Click the button above to take a picture</string>
+    <!-- lab3 profile Activity -->
+    <string name="goto_chat">Go to chat</string>
+    <string name="sendButton">SEND</string>
+    <string name="typeHere">Type here</string>
+    <string name="recieveButton">RECIEVE</string>
 
 </resources>

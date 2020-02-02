@@ -29,4 +29,10 @@
     <string name="enter_email">Introduce tu correo electrónico</string>
     <string name="your_picture">Su imagen:</string>
     <string name="click_button">Haz clic en el botón de arriba para tomar una foto</string>
+
+    <!-- lab3 profile Activity -->
+    <string name="goto_chat">Ir a chatear</string>
+    <string name="sendButton">ENVIAR</string>
+    <string name="typeHere">ESCRIBA AQUÍ</string>
+    <string name="recieveButton">RECIBIR</string>
 </resources>
