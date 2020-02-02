@@ -2,6 +2,7 @@ package com.example.androidlabs;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.os.Message;
@@ -84,6 +85,9 @@ public class ChatRoomActivity extends AppCompatActivity {
             return true;
         });
 
+        //Whenever you swipe down on the list, do something:
+        SwipeRefreshLayout refresher = findViewById(R.id.refresher);
+        refresher.setOnRefreshListener( () -> refresher.setRefreshing(false)  );
     }
 
 
