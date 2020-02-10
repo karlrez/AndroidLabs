@@ -4,8 +4,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,30 +20,49 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ChatRoomActivity extends AppCompatActivity {
     private ArrayList<Message> elements = new ArrayList<>();
     private MyListAdapter myAdapter;
     private Button sendBtn, recieveBtn;
     private EditText editText;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
 
+        //creating an adapter object and sending to listView
         ListView myList = (ListView) findViewById(R.id.theListView);
         myList.setAdapter( myAdapter = new MyListAdapter());
 
+        //variables for widgets in the view
         sendBtn = findViewById(R.id.sendBtn);
         recieveBtn = findViewById(R.id.recieveBtn);
         editText = findViewById(R.id.chatMessage);
+
+        //load saved messages from db
+        loadDataFromDatabase();
 
         //send button click handler
         sendBtn.setOnClickListener((click) -> {
             String message = editText.getText().toString();
             if (!message.equals("")) {
-                Message addMessage = new Message(message, true);
+
+                //add a new row to the db
+                ContentValues newRowValues = new ContentValues();
+
+                //provide a value for the db columns
+                newRowValues.put(MyOpener.COL_ISSEND, 1); // 1 for true 0 for false
+                newRowValues.put(MyOpener.COL_MESSAGE, message);
+
+                //insert into db (insert method returns a db id)
+                long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
+
+                // new creating Message object and adding to our ArrayList
+                Message addMessage = new Message(message, true, newId);
                 elements.add(addMessage);
                 myAdapter.notifyDataSetChanged();
                 editText.setText("");
@@ -50,7 +73,19 @@ public class ChatRoomActivity extends AppCompatActivity {
         recieveBtn.setOnClickListener((click) -> {
             String message = editText.getText().toString();
             if (!message.equals("")) {
-                Message addMessage = new Message(message, false);
+
+                //add a new row to the db
+                ContentValues newRowValues = new ContentValues();
+
+                //provide a value for the db columns
+                newRowValues.put(MyOpener.COL_ISSEND, 0);
+                newRowValues.put(MyOpener.COL_MESSAGE, message);
+
+                //insert into db which returns id
+                long newId = db.insert(MyOpener.TABLE_NAME, null, newRowValues);
+
+                // new creating Message object and adding to our ArrayList
+                Message addMessage = new Message(message, false, newId);
                 elements.add(addMessage);
                 myAdapter.notifyDataSetChanged();
                 editText.setText("");
@@ -68,17 +103,12 @@ public class ChatRoomActivity extends AppCompatActivity {
 
                     //what the Yes button does:
                     .setPositiveButton("Yes", (click, arg) -> {
+                        deleteMessage(elements.get(pos));
                         elements.remove(pos);
                         myAdapter.notifyDataSetChanged();
                     })
                     //What the No button does:
                     .setNegativeButton("No", (click, arg) -> { })
-
-                    //An optional third button:
-                    //.setNeutralButton("Maybe", (click, arg) -> {  })
-
-                    //You can add extra layout elements:
-                    //.setView(getLayoutInflater().inflate(R.layout.row_layout, null) )
 
                     //Show the dialog
                     .create().show();
@@ -99,7 +129,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
         public Object getItem(int position) { return elements.get(position); }
 
-        public long getItemId(int position) { return (long) position; }
+        public long getItemId(int position) { return elements.get(position).getId(); } //modified to return db id
 
         public View getView(int position, View old, ViewGroup parent)
         {
@@ -108,7 +138,7 @@ public class ChatRoomActivity extends AppCompatActivity {
 
             //make a new row:
             if(newView == null) {
-                if (elements.get(position).isSend())
+                if (elements.get(position).getIsSend())
                     newView = inflater.inflate(R.layout.send_layout, parent, false);
                 else
                     newView = inflater.inflate(R.layout.recieve_layout, parent, false);
@@ -122,17 +152,71 @@ public class ChatRoomActivity extends AppCompatActivity {
         }
     }
 
+    private void loadDataFromDatabase() {
+
+        //get db connection:
+        MyOpener dbOpener = new MyOpener(this);
+        db = dbOpener.getWritableDatabase();
+
+        //creating array for the db column names
+        String [] columns = {MyOpener.COL_ID, MyOpener.COL_MESSAGE, MyOpener.COL_ISSEND};
+        //query all the results from the db
+        Cursor results = db.query(false,MyOpener.TABLE_NAME,columns,null,null,null,null,null,null);
+
+        //Now the results object has rows of results that match the query.
+        //find the column indices:
+        int messageColumnIndex = results.getColumnIndex(MyOpener.COL_MESSAGE);
+        int isSendColIndex = results.getColumnIndex(MyOpener.COL_ISSEND);
+        int idColIndex = results.getColumnIndex(MyOpener.COL_ID);
+
+        //iterate over the results, return true if there is a next item:
+        while(results.moveToNext()) {
+            String message = results.getString(messageColumnIndex);
+            boolean isSend = results.getInt(isSendColIndex) ==1 ? true : false;
+            long id = results.getLong(idColIndex);
+
+            //add the new Contact to the array list:
+            elements.add(new Message(message, isSend, id));
+        }
+        //calling printCursor to print info to log
+        printCursor(results, db.getVersion());
+    }
+
+    protected void deleteMessage(Message message) {
+        db.delete(MyOpener.TABLE_NAME, MyOpener.COL_ID + "= ?", new String[] {Long.toString(message.getId())});
+    }
+
+    protected void printCursor(Cursor c, int version) {
+        Log.d("Version ", Integer.toString(version));
+        Log.d("Number of Columns ", Integer.toString(c.getColumnCount()));
+        Log.d("Column Names: ", Arrays.toString(c.getColumnNames()));
+        Log.d("Number of Results: ", Integer.toString(c.getCount()));
+
+        //printing all rows
+        c.moveToFirst();
+        for (int i=0; i<c.getCount(); i++) {
+            Log.d("Results: ", c.getString(0) + " | " +
+                    c.getString(1) + " | " +
+                    c.getString(2));
+            c.moveToNext();
+        }
+    }
+
     private class Message {
         private String message;
-        private boolean send;
+        private boolean isSend;
+        private long Id;
 
-        Message(String message, boolean send) {
+        Message(String message, boolean isSend, long Id) {
             this.message = message;
-            this.send = send;
+            this.isSend = isSend;
+            this.Id = Id;
         }
 
         public String getMessage () { return message; }
 
-        public boolean isSend () { return send; }
+        public boolean getIsSend () { return isSend; }
+
+        public long getId () { return Id; }
     }
 }
