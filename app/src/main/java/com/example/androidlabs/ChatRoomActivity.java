@@ -35,8 +35,8 @@ public class ChatRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_room);
 
         //creating an adapter object and sending to listView
-        ListView myList = (ListView) findViewById(R.id.theListView);
-        myList.setAdapter( myAdapter = new MyListAdapter());
+        ListView myList = findViewById(R.id.theListView);
+        myList.setAdapter(myAdapter = new MyListAdapter());
 
         //variables for widgets in the view
         sendBtn = findViewById(R.id.sendBtn);

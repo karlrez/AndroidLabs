@@ -34,4 +34,7 @@
     <string name="typeHere">Type here</string>
     <string name="recieveButton">RECIEVE</string>
 
+    <!-- lab6 -->
+    <string name="goto_weather">Go to Weather Forecast</string>
+
 </resources>

@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
-    SharedPreferences prefs = null;
 
+    SharedPreferences prefs = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
             // requestCode 1 is just random
             startActivity(goToProfile);
         } );
-
-
     }
 
     @Override
@@ -58,5 +56,4 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("ReserveName", stringToSave);
         editor.commit();
     }
-
 }

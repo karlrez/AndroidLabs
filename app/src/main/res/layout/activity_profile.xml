@@ -55,4 +55,10 @@
         android:layout_height="wrap_content"
         android:text="@string/goto_chat"/>
 
+    <Button
+        android:id="@+id/goto_weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/goto_weather"/>
+
 </LinearLayout>

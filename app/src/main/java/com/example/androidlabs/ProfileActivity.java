@@ -34,9 +34,14 @@ public class ProfileActivity extends AppCompatActivity {
         emailEditText.setText(fromMain.getStringExtra("EMAIL"));
 
         //go to chat button listener
-        Button chatBtn = (Button) findViewById(R.id.goto_chat);
+        Button chatBtn = findViewById(R.id.goto_chat);
         Intent goToChat = new Intent(this, ChatRoomActivity.class);
         chatBtn.setOnClickListener( click -> startActivity(goToChat));
+
+        //go to weather button listener
+        Button weatherBtn = findViewById(R.id.goto_weather);
+        Intent goToWeather = new Intent(this, WeatherForecast.class);
+        weatherBtn.setOnClickListener( click -> startActivity(goToWeather));
     }
 
     private void dispatchTakePictureIntent() {
