@@ -18,14 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:banner="@drawable/banner">
-        <activity android:name=".WeatherForecast"></activity>
-        <activity android:name=".ChatRoomActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".WeatherForecast">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ChatRoomActivity" />
+        <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".ProfileActivity" />
     </application>
