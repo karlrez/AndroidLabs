@@ -75,7 +75,7 @@ public class WeatherForecast extends AppCompatActivity {
         private String max;
         private String current_temp;
         private Bitmap image;
-        private String iconName; //code for weather_pic
+        private String iconName; // image name from xml file
 
 
         protected String doInBackground(String... args) {
@@ -118,6 +118,7 @@ public class WeatherForecast extends AppCompatActivity {
                 String fileName = iconName + ".png";
 
                 // check if file is in local storage
+                Log.i(ACTIVITY_NAME, "Searching for " + fileName);
                 if (!fileExistance(fileName)) {
                     Log.i(ACTIVITY_NAME, "Downloading image from server");
                     image = null;
@@ -128,6 +129,7 @@ public class WeatherForecast extends AppCompatActivity {
                     if (responseCode == 200) {
                         image = BitmapFactory.decodeStream(connection.getInputStream());
                     }
+                    Log.i(ACTIVITY_NAME, "Image downloaded from server");
 
                     //saving image to local storage
                     FileOutputStream outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
@@ -136,7 +138,7 @@ public class WeatherForecast extends AppCompatActivity {
                     outputStream.close();
                     Log.i(ACTIVITY_NAME, "Image saved to local storage");
                 } else {
-                    Log.i(ACTIVITY_NAME, "Downloading from local storage");
+                    Log.i(ACTIVITY_NAME, "Downloading " + fileName + " from local storage");
                     FileInputStream fis = null;
                     try {
                         fis = openFileInput(fileName);
@@ -159,13 +161,13 @@ public class WeatherForecast extends AppCompatActivity {
                     sb.append(line + "\n");
                 }
                 String result = sb.toString();
-                JSONObject jObj = new JSONObject(result);
-                UV = String.valueOf(jObj.getDouble("value"));
+                JSONObject jObject = new JSONObject(result);
+                //why are we getting this value as a float?
+                UV = String.valueOf(jObject.getDouble("value"));
 
             } catch (Exception e) {
                 returnString = "error";
             }
-
             return returnString;
         }
 
@@ -182,8 +184,8 @@ public class WeatherForecast extends AppCompatActivity {
             //update values
             weather_image.setImageBitmap(image);
             current_temperature.setText(String.format("Current Temp: %s%c", current_temp, celsiusSymbol));
-            max_temperature.setText(String.format("High: %s%c", max, celsiusSymbol));
-            min_temperature.setText(String.format("Low: %s%c", min, celsiusSymbol));
+            max_temperature.setText(String.format("Max: %s%c", max, celsiusSymbol));
+            min_temperature.setText(String.format("Min: %s%c", min, celsiusSymbol));
             uv_rating.setText(String.format("UV Index: %s", UV));
             //hide progress bar
             progressBar.setVisibility(View.INVISIBLE);
