@@ -182,8 +182,8 @@ public class WeatherForecast extends AppCompatActivity {
             //update values
             weather_image.setImageBitmap(image);
             current_temperature.setText(String.format("Current Temp: %s%c", current_temp, celsiusSymbol));
-            max_temperature.setText(String.format("High: %s%c", max, celsiusSymbol));
-            min_temperature.setText(String.format("Low: %s%c", min, celsiusSymbol));
+            max_temperature.setText(String.format("Max: %s%c", max, celsiusSymbol));
+            min_temperature.setText(String.format("Min: %s%c", min, celsiusSymbol));
             uv_rating.setText(String.format("UV Index: %s", UV));
             //hide progress bar
             progressBar.setVisibility(View.INVISIBLE);

@@ -2,34 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".WeatherForecast">
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    tools:context=".WeatherForecast"
+    android:layout_gravity="center">
 
     <ImageView
         android:id="@+id/current_weather"
-        android:layout_width="200dp"
-        android:layout_height="200dp"/>
+        android:layout_width="100dp"
+        android:layout_height="50dp"/>
 
     <TextView
         android:id="@+id/current_temperature"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/min_temperature"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/max_temperature"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/uv_rating"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"
