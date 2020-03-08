@@ -22,6 +22,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static com.example.androidlabs.R.layout.send_layout;
+
 public class ChatRoomActivity extends AppCompatActivity {
     private ArrayList<Message> elements = new ArrayList<>();
     private MyListAdapter myAdapter;
