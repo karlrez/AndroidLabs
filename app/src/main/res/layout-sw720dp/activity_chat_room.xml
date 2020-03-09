@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,41 +10,47 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refresher"
-        android:layout_width="match_parent"
-        android:layout_height="548dp">
+        android:layout_width="0dp"
+        android:layout_height="548dp"/>
 
         <ListView
             android:id="@+id/theListView"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="556dp" />
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/sendBtn"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_below="@+id/theListView"
+        android:layout_marginTop="155dp"
+        android:text="@string/sendButton" />
 
-        <Button
-            android:id="@+id/sendBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sendButton"/>
+    <EditText
+        android:id="@+id/chatMessage"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/theListView"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="155dp"
+        android:layout_toRightOf="@+id/sendBtn"
+        android:hint="@string/typeHere" />
 
-        <EditText
-            android:id="@+id/chatMessage"
-            android:layout_width="231dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/typeHere" />
+    <Button
+        android:id="@+id/recieveBtn"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/theListView"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="154dp"
+        android:layout_toRightOf="@+id/chatMessage"
+        android:text="@string/recieveButton" />
 
-        <Button
-            android:id="@+id/recieveBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/recieveButton"/>
+    <FrameLayout
+                android:id="@+id/fragmentLocation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#CDDC39"
+                android:layout_toRightOf="@id/theListView"/>
 
-
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

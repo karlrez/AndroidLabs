@@ -5,24 +5,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import static com.example.androidlabs.R.layout.send_layout;
 
 public class ChatRoomActivity extends AppCompatActivity {
     private ArrayList<Message> elements = new ArrayList<>();
@@ -30,6 +30,9 @@ public class ChatRoomActivity extends AppCompatActivity {
     private Button sendBtn, recieveBtn;
     private EditText editText;
     SQLiteDatabase db;
+    public static final String ITEM_SELECTED = "ITEM_SELECTED";
+    public static final String ITEM_ISSEND = "ITEM_ISSEND";
+    public static final String ITEM_ID = "ITEM_ID";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,9 +120,36 @@ public class ChatRoomActivity extends AppCompatActivity {
             return true;
         });
 
+        //fragment for frame layout
+        //FrameLayout frameLayout = findViewById(R.id.fragmentLocation);
+        boolean isTablet = findViewById(R.id.fragmentLocation) != null; // !null if using tablet device
+
+        myList.setOnItemClickListener((list, item, position, id) -> {
+            //Create a bundle to pass data to the new fragment
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString(ITEM_SELECTED, elements.get(position).getMessage() ); //getting message from elements
+            dataToPass.putBoolean(ITEM_ISSEND, elements.get(position).getIsSend());
+            dataToPass.putLong(ITEM_ID, id);
+
+            if(isTablet) {
+                DetailsFragment dFragment = new DetailsFragment(); //add a DetailFragment
+                dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                        .commit(); //actually load the fragment.
+            }
+            else { // using Phone device
+                Intent nextActivity = new Intent(this, EmptyActivity.class);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivity(nextActivity); //make the transition
+            }
+        });
+
         //Whenever you swipe down on the list, do something:
         SwipeRefreshLayout refresher = findViewById(R.id.refresher);
         refresher.setOnRefreshListener( () -> refresher.setRefreshing(false)  );
+
     }
 
 
