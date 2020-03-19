@@ -37,7 +37,9 @@
     <!-- lab6 -->
     <string name="goto_weather">Go to Weather Forecast</string>
 
-    <!-- lab7 -->
+    <!-- lab8 -->
+    <string name="open">open</string>
+    <string name="close">close</string>
 
 
 </resources>

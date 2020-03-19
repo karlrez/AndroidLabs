@@ -42,6 +42,11 @@ public class ProfileActivity extends AppCompatActivity {
         Button weatherBtn = findViewById(R.id.goto_weather);
         Intent goToWeather = new Intent(this, WeatherForecast.class);
         weatherBtn.setOnClickListener( click -> startActivity(goToWeather));
+
+        //go to toolbar activity
+        Button toolbarBtn = findViewById(R.id.goto_toolbar);
+        Intent goToToolbar = new Intent(this, TestToolbar.class);
+        toolbarBtn.setOnClickListener( click -> startActivityForResult(goToToolbar, 1));
     }
 
     private void dispatchTakePictureIntent() {
@@ -54,12 +59,18 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // result will == OK is checking u pressed the Accept btn or checkmark
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             mImageButton.setImageBitmap(imageBitmap);
         }
         Log.e(ACTIVITY_NAME, "In function:" + "onActivityResult()");
+
+        // when coming back from TestToolbar Activity
+        if (resultCode == 500) {
+            finish();
+        }
     }
 
     @Override

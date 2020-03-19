@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/item1"
+        android:title="mastercard"
+        android:icon="@drawable/mc"
+        app:showAsAction="always"/> <!-- means always show -->
+
+    <item android:id="@+id/item2"
+        android:title="amex"
+        android:icon="@drawable/amex"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/item3"
+        android:title="btc"
+        android:icon="@drawable/btc"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/item4"
+        android:title="globe"
+        android:icon="@drawable/global"
+        app:showAsAction="never"/> <!-- show in overflow menu -->
+</menu>
